@@ -77,7 +77,8 @@ async function login(req, res) {
       } else {
         let jwtToken = jwt.sign(
           {
-            email: foundUser.email,
+            firstName: foundUser.firstName,
+            lastName: foundUser.lastName,
             role: foundUser.role,
           },
           process.env.PRIVATE_JWT_KEY,

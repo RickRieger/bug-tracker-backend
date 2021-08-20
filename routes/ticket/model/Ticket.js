@@ -5,10 +5,10 @@ const ticketSchema = new mongoose.Schema(
     title: {
       type: String,
     },
-    details: {
+    description: {
       type: String,
     },
-    assignedPersonnel: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
+    project: [{ type: mongoose.Schema.ObjectId, ref: 'project' }],
     priorityLevel: {
       type: String,
       enum: ['urgent', 'high', 'medium', 'low'],
@@ -20,6 +20,7 @@ const ticketSchema = new mongoose.Schema(
       default: ['bug'],
     },
     comments: [{ type: mongoose.Schema.ObjectId, ref: 'ticketComments' }],
+    developer: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
   },
   { timestamps: true }
 );

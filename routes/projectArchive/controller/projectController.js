@@ -21,6 +21,8 @@ const createProject = async (req, res, next) => {
 };
 
 const getAllProjects = async (req, res, next) => {
+  // console.log(req);
+  // const { decodedJwt } = res.locals;
   try {
     let payload = await Project.find();
     res.json(payload);
@@ -55,33 +57,33 @@ const updateProject = async (req, res, next) => {
   }
 };
 
-const deleteProject = async (req, res, next) => {
-  try {
-    let deletedProject = await Project.findByIdAndRemove(req.params.id);
+// const deleteProject = async (req, res, next) => {
+//   try {
+//     let deletedFriend = await Friend.findByIdAndRemove(req.params.id);
 
-    // const { decodedJwt } = res.locals;
+//     const { decodedJwt } = res.locals;
 
-    // let foundUser = await User.findOne({ email: decodedJwt.email });
+//     let foundUser = await User.findOne({ email: decodedJwt.email });
 
-    // let foundUserArray = foundUser.friends;
+//     let foundUserArray = foundUser.friends;
 
-    // let filteredFriendsArray = foundUserArray.filter((id) => {
-    //   return id.toString() !== deletedFriend._id.toString();
-    // });
+//     let filteredFriendsArray = foundUserArray.filter((id) => {
+//       return id.toString() !== deletedFriend._id.toString();
+//     });
 
-    // foundUser.friends = filteredFriendsArray;
+//     foundUser.friends = filteredFriendsArray;
 
-    // await foundUser.save();
+//     await foundUser.save();
 
-    res.json({ message: 'success', payload: deletedProject });
-  } catch (e) {
-    next(e);
-  }
-};
+//     res.json({ message: 'success', payload: deletedFriend });
+//   } catch (e) {
+//     next(e);
+//   }
+// };
 
 module.exports = {
   createProject,
   getAllProjects,
   updateProject,
-  deleteProject,
+  // deleteProject,
 };

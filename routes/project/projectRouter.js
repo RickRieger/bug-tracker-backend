@@ -1,14 +1,17 @@
-const mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
+const jwtMiddleware = require('../utils/jwtMiddleware');
 
-const projectSchema = new mongoose.Schema({
-  title: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
-  assignedPersonnel: [{ type: mongoose.Schema.ObjectId, ref: 'personnel' }],
-  ticket: [{ type: mongoose.Schema.ObjectId, ref: 'ticket' }],
-});
+const {
+  createProject,
+  getAllProjects,
+  updateProject,
+  deleteProject,
+} = require('./controller/projectController');
 
-module.exports = mongoose.model('projectSchema', projectSchema);
+router.post('/create-project', jwtMiddleware, createProject);
+router.get('/get-all-projects', jwtMiddleware, getAllProjects);
+router.put('/update-project-by-id/:id', jwtMiddleware, updateProject);
+router.delete('/delete-project-by-id/:id', jwtMiddleware, deleteProject);
+
+module.exports = router;

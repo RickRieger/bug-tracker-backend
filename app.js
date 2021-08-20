@@ -6,6 +6,7 @@ const app = express();
 const ErrorMessageHandlerClass = require('./routes/utils/ErrorMessageHandlerClass');
 const errorController = require('./routes/utils/errorController');
 const userRouter = require('./routes/user/userRouter');
+const projectRouter = require('./routes/project/projectRouter');
 
 app.use(cors());
 if (process.env.NODE_ENV === 'development') {
@@ -22,6 +23,9 @@ app.use(express.json());
 //parsing form data/incoming data
 app.use(express.urlencoded({ extended: false }));
 app.use('/api/user', userRouter);
+app.use('/api/project', projectRouter);
+// app.use('/api/ticket', ticketRouter);
+// app.use('/api/ticket-comments', ticketCommentsRouter);
 
 app.all('*', function (req, res, next) {
   next(

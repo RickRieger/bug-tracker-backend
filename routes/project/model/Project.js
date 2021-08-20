@@ -2,16 +2,38 @@ const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
-      title: {
-        type: String,
-      },
+      required: true,
     },
-    assignedPersonnel: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
+    startDate: {
+      type: Date,
+      default: Date.now,
+      required: true,
+    },
+    endDate: {
+      type: Date,
+      default: Date.now,
+      required: true,
+    },
+    priority: {
+      type: String,
+      enum: ['low', 'medium', 'high', 'urgent'],
+      default: 'low',
+    },
+    completed: {
+      type: Boolean,
+      default: 'false',
+    },
+    projectManager: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
+    developer: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
     ticket: [{ type: mongoose.Schema.ObjectId, ref: 'ticket' }],
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('projectSchema', projectSchema);
+module.exports = mongoose.model('project', projectSchema);
