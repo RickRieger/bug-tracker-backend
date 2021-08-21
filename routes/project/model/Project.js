@@ -31,7 +31,7 @@ const projectSchema = new mongoose.Schema(
     },
     projectManager: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
     developer: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
-    ticket: [{ type: mongoose.Schema.ObjectId, ref: 'ticket' }],
+    tickets: [{ type: mongoose.Schema.ObjectId, ref: 'ticket' }],
   },
   { timestamps: true }
 );

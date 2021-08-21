@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 
 const ticketSchema = new mongoose.Schema(
   {
+    project: { type: mongoose.Schema.ObjectId, ref: 'project' },
     title: {
       type: String,
     },
     description: {
       type: String,
     },
-    project: [{ type: mongoose.Schema.ObjectId, ref: 'project' }],
+
     priorityLevel: {
       type: String,
       enum: ['urgent', 'high', 'medium', 'low'],
@@ -20,7 +21,7 @@ const ticketSchema = new mongoose.Schema(
       default: ['bug'],
     },
     comments: [{ type: mongoose.Schema.ObjectId, ref: 'ticketComments' }],
-    developer: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
+    developers: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
   },
   { timestamps: true }
 );
