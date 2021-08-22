@@ -18,7 +18,7 @@ const ticketSchema = new mongoose.Schema(
     ticketType: {
       type: String,
       enum: ['bug', 'task', 'new-feature'],
-      default: ['bug'],
+      default: 'bug',
     },
     comments: [{ type: mongoose.Schema.ObjectId, ref: 'ticketComments' }],
     developers: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],

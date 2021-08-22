@@ -8,11 +8,13 @@ const errorController = require('./routes/utils/errorController');
 const userRouter = require('./routes/user/userRouter');
 const projectRouter = require('./routes/project/projectRouter');
 const ticketRouter = require('./routes/ticket/ticketRouter');
+const ticketCommentRouter = require('./routes/ticketComment/ticketCommentRouter');
 
 app.use(cors());
 if (process.env.NODE_ENV === 'development') {
   app.use(logger('dev'));
 }
+
 const limiter = rateLimit({
   max: 20,
   windowMs: 1 * 60 * 1000, //this is in millie second
@@ -26,6 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/user', userRouter);
 app.use('/api/project', projectRouter);
 app.use('/api/ticket', ticketRouter);
+app.use('/api/comment', ticketCommentRouter);
 // app.use('/api/ticket-comments', ticketCommentsRouter);
 
 app.all('*', function (req, res, next) {

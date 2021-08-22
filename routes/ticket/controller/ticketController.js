@@ -10,13 +10,10 @@ const createTicket = async (req, res, next) => {
       priorityLevel,
       ticketType,
     });
-    console.log('here dummy', newTicket);
-
     const savedNewTicket = await newTicket.save();
     const foundTargetProject = await Project.findOne({
       _id: newTicket.project,
     });
-    console.log(foundTargetProject);
     foundTargetProject.tickets.push(savedNewTicket._id);
     await foundTargetProject.save();
     res.json(savedNewTicket);
@@ -34,18 +31,17 @@ const getAllTickets = async (req, res, next) => {
   }
 };
 const getAllTicketsByProject = async (req, res, next) => {
-  console.log(req.params);
   const project_id = req.params.id;
 
   try {
     let payload = await Project.findOne({ _id: project_id })
       .populate({
-        path: 'ticket',
+        path: 'tickets',
         model: Ticket,
         select: '-__v',
       })
       .select(
-        '-priority -completed -projectManager -developer -__v -_id -name -description'
+        '-name -description -startDate -endDate -__v -_id -priority -completed -projectManager -developer -createdAt -updatedAt'
       );
     res.json(payload);
   } catch (e) {
