@@ -39,7 +39,19 @@ async function signup(req, res, next) {
 
       let savedUser = await createdUser.save();
 
-      res.json({ message: 'success' });
+      let jwtToken = jwt.sign(
+        {
+          firstName: savedUser.firstName,
+          lastName: savedUser.lastName,
+          role: savedUser.role,
+        },
+        process.env.PRIVATE_JWT_KEY,
+        {
+          expiresIn: '1d',
+        }
+      );
+
+      res.json({ message: 'success', payload: jwtToken });
     }
   } catch (e) {
     console.log(e);
@@ -50,7 +62,7 @@ async function signup(req, res, next) {
 
 async function login(req, res) {
   const { email, password } = req.body;
-  console.log(email);
+
   const { errorObj } = res.locals;
 
   if (Object.keys(errorObj).length > 0) {
@@ -63,7 +75,7 @@ async function login(req, res) {
     if (!foundUser) {
       res.status(400).json({
         message: 'failure',
-        payload: 'Please check your email and password',
+        payload: 'Please check your email',
       });
     } else {
       //password = 1, foundUser.password = $2a$12$tauL3AEb5gvKdcQdDKNWLeIYv422jNq2aRsaNWF5J4TdcWEdhq4CO
@@ -72,7 +84,7 @@ async function login(req, res) {
       if (!comparedPassword) {
         res.status(400).json({
           message: 'failure',
-          payload: 'Please check your email and password',
+          payload: 'Please check your password',
         });
       } else {
         let jwtToken = jwt.sign(
