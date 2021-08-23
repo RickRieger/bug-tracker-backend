@@ -29,6 +29,10 @@ const projectSchema = new mongoose.Schema(
       type: Boolean,
       default: 'false',
     },
+    archive: {
+      type: Boolean,
+      default: 'false',
+    },
     projectManager: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
     developer: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
     tickets: [{ type: mongoose.Schema.ObjectId, ref: 'ticket' }],

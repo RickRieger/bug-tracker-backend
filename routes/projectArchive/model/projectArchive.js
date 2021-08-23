@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const projectArchiveSchema = new mongoose.Schema(
   {
-    archivedProjects: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
+    archivedProjects: [{ type: mongoose.Schema.ObjectId, ref: 'project' }],
   },
   { timestamps: true }
 );

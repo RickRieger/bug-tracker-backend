@@ -1,6 +1,4 @@
 const Project = require('../model/Project');
-// const User = require('../../user/model/User.js');
-// const Ticket = require('../../ticket/model/Ticket.js');
 
 const createProject = async (req, res, next) => {
   try {
@@ -58,21 +56,6 @@ const updateProject = async (req, res, next) => {
 const deleteProject = async (req, res, next) => {
   try {
     let deletedProject = await Project.findByIdAndRemove(req.params.id);
-
-    // const { decodedJwt } = res.locals;
-
-    // let foundUser = await User.findOne({ email: decodedJwt.email });
-
-    // let foundUserArray = foundUser.friends;
-
-    // let filteredFriendsArray = foundUserArray.filter((id) => {
-    //   return id.toString() !== deletedFriend._id.toString();
-    // });
-
-    // foundUser.friends = filteredFriendsArray;
-
-    // await foundUser.save();
-
     res.json({ message: 'success', payload: deletedProject });
   } catch (e) {
     next(e);
