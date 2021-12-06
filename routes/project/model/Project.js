@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema(
   {
-    name: {
+    projectName: {
       type: String,
+      unique: true,
       required: true,
     },
     description: {
@@ -22,7 +23,7 @@ const projectSchema = new mongoose.Schema(
     },
     priority: {
       type: String,
-      enum: ['low', 'medium', 'high', 'urgent'],
+      enum: ['Low', 'Medium', 'High', 'Urgent'],
       default: 'low',
     },
     completed: {

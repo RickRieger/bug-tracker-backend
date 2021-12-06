@@ -64,11 +64,11 @@ async function login(req, res) {
   const { email, password } = req.body;
 
   const { errorObj } = res.locals;
-
+ console.log('here-----',res.locals.errorObj)
   if (Object.keys(errorObj).length > 0) {
     return res.status(500).json({ message: 'failure', payload: errorObj });
   }
-
+    console.log('wtf')
   try {
     let foundUser = await User.findOne({ email: email });
 

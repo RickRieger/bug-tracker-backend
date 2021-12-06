@@ -3,9 +3,9 @@ const Project = require('../model/Project');
 const createProject = async (req, res, next) => {
   try {
     console.log(req.body);
-    const { name, description, startDate, endDate, priority } = req.body;
+    const { projectName, description, startDate, endDate, priority } = req.body;
     const newProject = new Project({
-      name,
+      projectName,
       description,
       startDate,
       endDate,
