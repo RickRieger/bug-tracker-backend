@@ -41,7 +41,7 @@ const getAllTicketsByProject = async (req, res, next) => {
         select: '-__v',
       })
       .select(
-        '-name -description -startDate -endDate -__v -_id -priority -completed -projectManager -developer -createdAt -updatedAt'
+        '-name -description -startDate -endDate -__v -_id -priority -completed -projectManager -developers -createdAt -updatedAt'
       );
     res.json(payload);
   } catch (e) {
