@@ -12,7 +12,7 @@ const createProject = async (req, res, next) => {
       priority,
     });
     const savedNewProject = await newProject.save();
-    res.json(savedNewProject);
+    res.json({ message: 'New Project Created', payload: savedNewProject });
   } catch (e) {
     next(e);
   }
