@@ -2,7 +2,6 @@ const Project = require('../model/Project');
 
 const createProject = async (req, res, next) => {
   try {
-    console.log(req.body);
     const { projectName, description, startDate, endDate, priority } = req.body;
     const newProject = new Project({
       projectName,
@@ -62,9 +61,21 @@ const deleteProject = async (req, res, next) => {
   }
 };
 
+async function getProjectById(req, res, next) {
+  try {
+    let projectInfo = await Project.findOne({
+      _id: req.params.id,
+    })
+    res.json({ message: 'success', payload: projectInfo });
+  } catch (e) {
+    next(e);
+  }
+}
+
 module.exports = {
   createProject,
   getAllProjects,
   updateProject,
   deleteProject,
+  getProjectById
 };
