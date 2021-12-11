@@ -13,7 +13,7 @@ const {
 router.post('/create-ticket', jwtMiddleware, createTicket);
 router.get('/get-all-tickets', jwtMiddleware, getAllTickets);
 router.get(
-  '/get-all-project-tickets-by-id/:id',
+  '/get-all-tickets-by-project-id/:id',
   jwtMiddleware,
   getAllTicketsByProject
 );

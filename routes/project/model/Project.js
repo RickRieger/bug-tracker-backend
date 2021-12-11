@@ -42,3 +42,22 @@ const projectSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model('project', projectSchema);
+// if (project){
+//   const priorityLevel = project.priority;
+//   let color = ''
+//   switch(priorityLevel){
+//     case 'Urgent':
+//       color='error.dark'
+//       break;
+//     case 'High':
+//       color='error.light'
+//       break;
+//     case 'Medium':
+//       color='warning.light'
+//       break;
+//     case 'Low':
+//       color='info.light'
+//       break;
+//   }
+
+// }

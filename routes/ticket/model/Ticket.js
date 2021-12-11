@@ -12,7 +12,7 @@ const ticketSchema = new mongoose.Schema(
 
     priorityLevel: {
       type: String,
-      enum: ['urgent', 'high', 'medium', 'low'],
+      enum: ['Urgent', 'High', 'Medium', 'Low'],
       default: 'high',
     },
     ticketType: {
