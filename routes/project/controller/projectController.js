@@ -51,6 +51,36 @@ const updateProject = async (req, res, next) => {
     next(e);
   }
 };
+const addPersonnelToProject = async (req, res, next) => {
+
+  let body = req.body;
+
+  console.log(body)
+  console.log(req.params.id)
+
+  let updateObj = {};
+
+  for (let key in body) {
+    if (body[key] !== '') {
+      updateObj[key] = body[key];
+    }
+  }
+
+  try {
+    let updatedProject = await Project.findByIdAndUpdate(
+      req.params.id,
+      updateObj,
+      { new: true }
+    ).select('-__v');
+    res.json({
+      message: 'success',
+      payload: updatedProject,
+    });
+
+  } catch (e) {
+    next(e);
+  }
+};
 
 const deleteProject = async (req, res, next) => {
   try {
@@ -63,10 +93,10 @@ const deleteProject = async (req, res, next) => {
 
 async function getProjectById(req, res, next) {
   try {
-    let projectInfo = await Project.findOne({
+    let project = await Project.findOne({
       _id: req.params.id,
     })
-    res.json({ message: 'success', payload: projectInfo });
+    res.json({ message: 'success', payload: project });
   } catch (e) {
     next(e);
   }
@@ -76,6 +106,7 @@ module.exports = {
   createProject,
   getAllProjects,
   updateProject,
+  addPersonnelToProject,
   deleteProject,
   getProjectById
 };

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const ticketSchema = new mongoose.Schema(
   {
-    project: { type: mongoose.Schema.ObjectId, ref: 'project' },
+    projectId: { type: mongoose.Schema.ObjectId, ref: 'project' },
     title: {
       type: String,
     },
@@ -20,8 +20,13 @@ const ticketSchema = new mongoose.Schema(
       enum: ['bug', 'task', 'new-feature'],
       default: 'bug',
     },
+    ticketStatus: {
+      type: String,
+      enum: ['New', 'Unassigned', 'Development', 'Testing', 'Resolved', 'Archived' ],
+      default: 'New',
+    },
     comments: [{ type: mongoose.Schema.ObjectId, ref: 'ticketComments' }],
-    developers: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
+    developer: { type: mongoose.Schema.ObjectId, ref: 'user' },
   },
   { timestamps: true }
 );

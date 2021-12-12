@@ -2,9 +2,11 @@ const Ticket = require('../model/Ticket.js');
 const Project = require('../../project/model/Project');
 const createTicket = async (req, res, next) => {
   try {
-    const { projectId, project, title, description, priorityLevel, ticketType } = req.body;
+    const { projectId, title, description, priorityLevel, ticketType } = req.body;
+
+
     const newTicket = new Ticket({
-      project,
+      projectId,
       title,
       description,
       priorityLevel,
@@ -16,7 +18,7 @@ const createTicket = async (req, res, next) => {
     console.log('-----st----', savedNewTicket)
     
     const foundTargetProject = await Project.findOne({
-      projectId: newTicket.project,
+      _id: newTicket.projectId,
     });
   
     console.log('-----ft----', foundTargetProject)
@@ -53,7 +55,7 @@ const getAllTicketsByProject = async (req, res, next) => {
         select: '-__v',
       })
       .select(
-        '-name -description -startDate -endDate -__v -_id -priority -completed -projectManager -developers -createdAt -updatedAt'
+        '-archive -completed -createdAt -description -developers -startDate -endDate -priority -completed -projectManager -projectName -updatedAt -__v -_id'
       );
     res.json(payload);
   } catch (e) {

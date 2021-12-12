@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../model/User');
-
+const Project = require('../../project/model/Project')
 const jwt = require('jsonwebtoken');
 
 async function signup(req, res, next) {
@@ -116,6 +116,35 @@ async function fetchUserInfo(req, res, next) {
   }
 }
 
+const getAllUsers = async (req, res, next) => {
+  try {
+    let payload = await User.find().select('-createdAt -email -password -phoneNumber -projects -tickets -updatedAt -_v');
+    res.json(payload);
+  } catch (e) {
+    next(e);
+  }
+};
+
+const getAllUsersByProject = async (req, res, next) => {
+  const project_id = req.params.id;
+
+  try {
+    let payload = await Project.findOne({ _id: project_id })
+      .populate({
+        path: 'developers',
+        model: User,
+        select: '-email -phoneNumber -password -projects -tickets -updatedAt -createdAt -ticket -project -__v',
+      })
+      .select(
+        '-priority -completed -archive -projectManager -projectName -description -startDate -endDate -createdAt -updatedAt -tickets -__v -_id'
+      );
+      console.log('payload-----', payload)
+    res.json(payload);
+  } catch (e) {
+    next(e);
+  }
+};
+
 async function updateUser(req, res, next) {
   console.log(req.body);
   if (req.body.password) {
@@ -139,4 +168,4 @@ async function updateUser(req, res, next) {
   }
 }
 
-module.exports = { signup, login, fetchUserInfo, updateUser };
+module.exports = { signup, login, fetchUserInfo, getAllUsers, getAllUsersByProject, updateUser };

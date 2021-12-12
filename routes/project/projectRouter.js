@@ -6,6 +6,7 @@ const {
   createProject,
   getAllProjects,
   updateProject,
+  addPersonnelToProject,
   deleteProject,
   getProjectById
 } = require('./controller/projectController');
@@ -13,6 +14,7 @@ const {
 router.post('/create-project', jwtMiddleware, createProject);
 router.get('/get-all-projects', jwtMiddleware, getAllProjects);
 router.put('/update-project-by-id/:id', jwtMiddleware, updateProject);
+router.put('/add-personnel-to-project/:id', jwtMiddleware, addPersonnelToProject);
 router.delete('/delete-project-by-id/:id', jwtMiddleware, deleteProject);
 router.get('/get-project-by-id/:id', jwtMiddleware, getProjectById);
 

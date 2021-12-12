@@ -16,8 +16,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const limiter = rateLimit({
-  max: 20,
-  windowMs: 1 * 60 * 1000, //this is in millie second
+  max: 100,
+  windowMs: 15 * 60 * 1000, //this is in millie second
   message:
     'Too many requests from this IP, please try again or contact support',
 });

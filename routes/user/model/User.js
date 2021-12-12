@@ -28,8 +28,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    project: [{ type: mongoose.Schema.ObjectId, ref: 'project' }],
-    ticket: [{ type: mongoose.Schema.ObjectId, ref: 'ticket' }],
+    projects: [{ type: mongoose.Schema.ObjectId, ref: 'project', unique: true }],
+    tickets: [{ type: mongoose.Schema.ObjectId, ref: 'ticket' , unique: true }],
   },
   { timestamps: true }
 );

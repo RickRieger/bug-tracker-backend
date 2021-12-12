@@ -6,6 +6,8 @@ const {
   signup,
   login,
   fetchUserInfo,
+  getAllUsers,
+  getAllUsersByProject,
   updateUser,
 } = require('./controller/userController');
 
@@ -37,6 +39,10 @@ router.post(
 );
 
 router.get('/get-user-info', jwtMiddleware, fetchUserInfo);
+
+router.get('/get-all-users', jwtMiddleware, getAllUsers);
+
+router.get('/get-all-users-by-project-id/:id', jwtMiddleware, getAllUsersByProject);
 
 router.put('/update-user-profile', jwtMiddleware, updateUser);
 

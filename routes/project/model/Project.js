@@ -34,30 +34,11 @@ const projectSchema = new mongoose.Schema(
       type: Boolean,
       default: 'false',
     },
-    projectManager: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
-    developers: [{ type: mongoose.Schema.ObjectId, ref: 'user' }],
-    tickets: [{ type: mongoose.Schema.ObjectId, ref: 'ticket' }],
+    projectManager: [{ type: mongoose.Schema.ObjectId, ref: 'user', unique: true }],
+    developers: [{ type: mongoose.Schema.ObjectId, ref: 'user' , unique: true }],
+    tickets: [{ type: mongoose.Schema.ObjectId, ref: 'ticket' , unique: true }],
   },
   { timestamps: true }
 );
 
 module.exports = mongoose.model('project', projectSchema);
-// if (project){
-//   const priorityLevel = project.priority;
-//   let color = ''
-//   switch(priorityLevel){
-//     case 'Urgent':
-//       color='error.dark'
-//       break;
-//     case 'High':
-//       color='error.light'
-//       break;
-//     case 'Medium':
-//       color='warning.light'
-//       break;
-//     case 'Low':
-//       color='info.light'
-//       break;
-//   }
-
-// }
