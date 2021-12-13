@@ -15,16 +15,10 @@ const createTicket = async (req, res, next) => {
  
     const savedNewTicket = await newTicket.save();
 
-    console.log('-----st----', savedNewTicket)
-    
     const foundTargetProject = await Project.findOne({
       _id: newTicket.projectId,
     });
   
-    console.log('-----ft----', foundTargetProject)
-
-
-
     foundTargetProject.tickets.push(savedNewTicket);
     await foundTargetProject.save();
     res.json({
@@ -88,15 +82,32 @@ const updateTicket = async (req, res, next) => {
     next(e);
   }
 };
+const uploadFileToTicket = async (req, res, next) => {
+  if(req.files === null){
+    return res.status(400).json({message: 'No File Uploaded'})
+  }
+
+  const file = req.file
+
+  console.log(file)
+
+  res.send('successful upload')
+  
+  return
+  try {
+
+  } catch (e) {
+    next(e);
+  }
+};
 
 const deleteTicket = async (req, res, next) => {
   try {
     let deletedTicket = await Ticket.findByIdAndRemove(req.params.id);
-    console.log('deleted ticket', deletedTicket);
-    console.log('deleted ticket project', deletedTicket.project);
+
 
     let foundProject = await Project.findOne({ _id: deletedTicket.project });
-    console.log('found project', foundProject);
+
 
     let foundTicketsArray = foundProject.tickets;
 
@@ -104,7 +115,7 @@ const deleteTicket = async (req, res, next) => {
       return id.toString() !== deletedTicket._id.toString();
     });
 
-    console.log('filtered', filteredTicketsArray);
+
 
     foundProject.tickets = filteredTicketsArray;
 
@@ -122,4 +133,5 @@ module.exports = {
   getAllTicketsByProject,
   updateTicket,
   deleteTicket,
+  uploadFileToTicket
 };

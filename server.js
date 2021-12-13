@@ -14,7 +14,7 @@ mongoose
   .then(() => {
     app.listen(port, () => {
       console.log(`Server connected on ${port}`);
-      console.log('MongoDB Connected PAB');
+      console.log('MongoDB Connected');
     });
   })
   .catch((e) => {

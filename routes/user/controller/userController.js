@@ -66,7 +66,7 @@ async function login(req, res) {
   if (Object.keys(errorObj).length > 0) {
     return res.status(500).json({ message: 'failure', payload: errorObj });
   }
-    console.log('wtf')
+
   try {
     let foundUser = await User.findOne({ email: email });
 
@@ -138,7 +138,7 @@ const getAllUsersByProject = async (req, res, next) => {
       .select(
         '-priority -completed -archive -projectManager -projectName -description -startDate -endDate -createdAt -updatedAt -tickets -__v -_id'
       );
-      console.log('payload-----', payload)
+
     res.json(payload);
   } catch (e) {
     next(e);
@@ -146,7 +146,7 @@ const getAllUsersByProject = async (req, res, next) => {
 };
 
 async function updateUser(req, res, next) {
-  console.log(req.body);
+
   if (req.body.password) {
     let salt = await bcrypt.genSalt(12);
     let hashedPassword = await bcrypt.hash(req.body.password, salt);

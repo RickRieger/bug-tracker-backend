@@ -29,8 +29,7 @@ function dispatchErrorProduction(error, req, res) {
 function handleMongoDBDuplicate(err) {
   let errorMessageDuplicateKey = Object.keys(err.keyValue)[0];
   let errorMessageDuplicateValue = Object.values(err.keyValue)[0];
-  console.log(errorMessageDuplicateKey);
-  console.log(errorMessageDuplicateValue);
+
   let message = `${errorMessageDuplicateKey} - ${errorMessageDuplicateValue} is taken please choose another one`;
   return new ErrorMessageHandlerClass(message, 400);
 }
@@ -40,7 +39,7 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
   let error = { ...err };
   error.message = err.message;
-  console.log(error);
+
   if (error.code === 11000 || error.code === 11001) {
     error = handleMongoDBDuplicate(error);
   }

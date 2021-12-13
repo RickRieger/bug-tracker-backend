@@ -19,7 +19,7 @@ function checkIsAlphaFunc(req, res, next) {
       }
     }
   }
-  console.log('made it this far2');
+
   next();
 }
 

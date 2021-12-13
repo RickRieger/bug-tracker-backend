@@ -1,4 +1,5 @@
 const Project = require('../model/Project');
+const User = require('../../user/model/User');
 
 const createProject = async (req, res, next) => {
   try {
@@ -51,32 +52,31 @@ const updateProject = async (req, res, next) => {
     next(e);
   }
 };
+
 const addPersonnelToProject = async (req, res, next) => {
-
-  let body = req.body;
-
-  console.log(body)
-  console.log(req.params.id)
-
-  let updateObj = {};
-
-  for (let key in body) {
-    if (body[key] !== '') {
-      updateObj[key] = body[key];
-    }
-  }
-
   try {
-    let updatedProject = await Project.findByIdAndUpdate(
-      req.params.id,
-      updateObj,
-      { new: true }
-    ).select('-__v');
-    res.json({
-      message: 'success',
-      payload: updatedProject,
+    const  developers  = req.body.developers;
+  
+    let foundProject = await Project.findOne({
+      _id: req.params.id,
     });
+    
+    foundProject.developers.push(...developers);
 
+    foundProject.save();
+
+    for (const dev of developers) {
+      let foundUser = await User.findOne({
+        _id: dev,
+      });
+      foundUser.projects.push(req.params.id);
+      foundUser.save();
+    }
+
+    res.json({
+      message: 'Personnel saved',
+      payload: foundProject,
+    });
   } catch (e) {
     next(e);
   }
@@ -95,7 +95,7 @@ async function getProjectById(req, res, next) {
   try {
     let project = await Project.findOne({
       _id: req.params.id,
-    })
+    });
     res.json({ message: 'success', payload: project });
   } catch (e) {
     next(e);
@@ -108,5 +108,5 @@ module.exports = {
   updateProject,
   addPersonnelToProject,
   deleteProject,
-  getProjectById
+  getProjectById,
 };

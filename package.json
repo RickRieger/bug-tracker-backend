@@ -1,7 +1,7 @@
 {
   "name": "backend-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Bug tracker back end",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,7 +21,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.11",
     "morgan": "^1.10.0",
-    "twilio": "^3.65.0",
+    "multer": "^1.4.4",
     "validator": "^13.6.0"
   }
 }
