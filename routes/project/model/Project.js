@@ -35,8 +35,8 @@ const projectSchema = new mongoose.Schema(
       default: 'false',
     },
     projectManager: { type: mongoose.Schema.ObjectId, ref: 'user' },
-    developers: [{ type: mongoose.Schema.ObjectId, ref: 'user' , unique: true }],
-    tickets: [{ type: mongoose.Schema.ObjectId, ref: 'ticket' , unique: true }],
+    developers: [{ type: mongoose.Schema.ObjectId, ref: 'user'} ],
+    tickets: [{ type: mongoose.Schema.ObjectId, ref: 'ticket' }],
   },
   { timestamps: true }
 );
