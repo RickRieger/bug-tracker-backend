@@ -22,9 +22,17 @@ const ticketSchema = new mongoose.Schema(
     },
     ticketStatus: {
       type: String,
-      enum: ['New', 'Unassigned', 'Development', 'Testing', 'Resolved', 'Archived' ],
+      enum: [
+        'New',
+        'Unassigned',
+        'Development',
+        'Testing',
+        'Resolved',
+        'Archived',
+      ],
       default: 'New',
     },
+    attachments: [''],
     comments: [{ type: mongoose.Schema.ObjectId, ref: 'ticketComments' }],
     developer: { type: mongoose.Schema.ObjectId, ref: 'user' },
   },

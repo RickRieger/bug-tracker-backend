@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../model/User');
-const Project = require('../../project/model/Project')
+const Project = require('../../project/model/Project');
 const jwt = require('jsonwebtoken');
 
 async function signup(req, res, next) {
@@ -53,7 +53,6 @@ async function signup(req, res, next) {
       res.json({ message: 'success', payload: jwtToken });
     }
   } catch (e) {
-
     next(e);
   }
 }
@@ -118,7 +117,9 @@ async function fetchUserInfo(req, res, next) {
 
 const getAllUsers = async (req, res, next) => {
   try {
-    let payload = await User.find().select('-createdAt -email -password -phoneNumber -projects -tickets -updatedAt -_v');
+    let payload = await User.find().select(
+      '-createdAt -email -password -phoneNumber -projects -tickets -updatedAt -_v'
+    );
     res.json(payload);
   } catch (e) {
     next(e);
@@ -133,7 +134,8 @@ const getAllUsersByProject = async (req, res, next) => {
       .populate({
         path: 'developers',
         model: User,
-        select: '-email -phoneNumber -password -projects -tickets -updatedAt -createdAt -ticket -project -__v',
+        select:
+          '-email -phoneNumber -password -projects -tickets -updatedAt -createdAt -ticket -project -__v',
       })
       .select(
         '-priority -completed -archive -projectManager -projectName -description -startDate -endDate -createdAt -updatedAt -tickets -__v -_id'
@@ -146,7 +148,6 @@ const getAllUsersByProject = async (req, res, next) => {
 };
 
 async function updateUser(req, res, next) {
-
   if (req.body.password) {
     let salt = await bcrypt.genSalt(12);
     let hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -168,4 +169,11 @@ async function updateUser(req, res, next) {
   }
 }
 
-module.exports = { signup, login, fetchUserInfo, getAllUsers, getAllUsersByProject, updateUser };
+module.exports = {
+  signup,
+  login,
+  fetchUserInfo,
+  getAllUsers,
+  getAllUsersByProject,
+  updateUser,
+};
