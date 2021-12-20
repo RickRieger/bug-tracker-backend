@@ -24,10 +24,8 @@ router.post(
 router.get(
   '/get-all-attachments-by-ticket/:id',
   jwtMiddleware,
-  upload.single('file'),
   getAllAttachmentsByTicket
 );
-
 router.get(
   '/get-single-attachment-by-key/:key',
   jwtMiddleware,

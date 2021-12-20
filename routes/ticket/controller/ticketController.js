@@ -96,6 +96,12 @@ const updateTicket = async (req, res, next) => {
   }
 };
 
+
+
+
+
+
+
 const getAllAttachmentsByTicket = async (req, res, next) => {
   const ticket_id = req.params.id;
   try {
@@ -103,6 +109,7 @@ const getAllAttachmentsByTicket = async (req, res, next) => {
       _id: ticket_id,
     });
     let payload = foundTargetTicket.attachments;
+
     let attachments = [];
     payload.map((item) => {
       let desc = item.attachment.description;
@@ -115,18 +122,31 @@ const getAllAttachmentsByTicket = async (req, res, next) => {
       };
       attachments.push(attachment);
     });
+
     res.json({
       message: 'success',
       payload: attachments,
     });
+
   } catch (error) {}
 };
+
+
+
+
+
+
+
+
+
+
 
 const uploadFileToTicket = async (req, res, next) => {
   const ticket_id = req.params.id;
   if (req.files === null) {
     return res.status(400).json({ message: 'No File Uploaded' });
   }
+  
   const fileUploadedFromClient = req.file;
   const description = req.body.description;
 
@@ -153,22 +173,46 @@ const uploadFileToTicket = async (req, res, next) => {
   }
 };
 
+
+
+
+
+
+
+
+
+
 const getSingleAttachmentFromS3bucket = async (req, res, next) => {
   try {
-    console.log('req----------------');
     const key = req.params.key;
+
     const readStream = getFileStream(key);
-    console.log('req----------------');
+
     const pipe = await readStream.pipe(res);
 
     readStream.on('error', (error) => {
       return res.status(404).send({message:'file not found', payload:error});
     });
+
   } catch (e) {
-    console.log('error--------', e);
     next(e);
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const deleteTicket = async (req, res, next) => {
   try {
