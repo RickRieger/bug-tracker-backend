@@ -42,6 +42,15 @@ const getAllTickets = async (req, res, next) => {
     next(e);
   }
 };
+const getTicket = async (req, res, next) => {
+  const ticket_id = req.params.id;
+  try {
+    let payload = await Ticket.findOne({ _id: ticket_id })
+    res.json(payload);
+  } catch (e) {
+    next(e);
+  }
+};
 const getAllTicketsByProject = async (req, res, next) => {
   const project_id = req.params.id;
 
@@ -128,14 +137,11 @@ const uploadFileToTicket = async (req, res, next) => {
       attachment: { description, fileUploadedFromClient, resultFromS3 },
     };
 
-
     const foundTargetTicket = await Ticket.findOne({
       _id: ticket_id,
     });
 
-
     foundTargetTicket.attachments.push(ticketAttachment);
-
 
     await foundTargetTicket.save();
 
@@ -147,10 +153,21 @@ const uploadFileToTicket = async (req, res, next) => {
   }
 };
 
-const getSingleAttachmentFromS3bucket = (req, res) => {
-  const key = req.params.key;
-  const readStream = getFileStream(key);
-  readStream.pipe(res);
+const getSingleAttachmentFromS3bucket = async (req, res, next) => {
+  try {
+    console.log('req----------------');
+    const key = req.params.key;
+    const readStream = getFileStream(key);
+    console.log('req----------------');
+    const pipe = await readStream.pipe(res);
+
+    readStream.on('error', (error) => {
+      return res.status(404).send({message:'file not found', payload:error});
+    });
+  } catch (e) {
+    console.log('error--------', e);
+    next(e);
+  }
 };
 
 const deleteTicket = async (req, res, next) => {
@@ -177,6 +194,7 @@ const deleteTicket = async (req, res, next) => {
 
 module.exports = {
   createTicket,
+  getTicket,
   getAllTickets,
   getAllTicketsByProject,
   getAllAttachmentsByTicket,

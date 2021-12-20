@@ -4,6 +4,7 @@ const jwtMiddleware = require('../utils/jwtMiddleware');
 const upload = require('../utils/multerMiddleware');
 const {
   createTicket,
+  getTicket,
   getAllTickets,
   getAllTicketsByProject,
   updateTicket,
@@ -33,6 +34,7 @@ router.get(
   getSingleAttachmentFromS3bucket
 );
 router.get('/get-all-tickets', jwtMiddleware, getAllTickets);
+router.get('/get-ticket-by-id/:id', jwtMiddleware, getTicket);
 router.get(
   '/get-all-tickets-by-project-id/:id',
   jwtMiddleware,
