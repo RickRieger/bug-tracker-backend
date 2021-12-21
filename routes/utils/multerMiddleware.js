@@ -1,11 +1,8 @@
 const multer = require('multer');
-const { dirname } = require('path');
-const path = require('path');
 
 const fileStorageEngine = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, '/home/ubuntu/bug-tracker-backend/uploads');
-    ///home/ubuntu/bug-tracker-backend/uploads
+  destination: (req, file, cbFunc) => {
+    cbFunc(null, './uploads');
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname);
