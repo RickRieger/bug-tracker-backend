@@ -4,6 +4,7 @@ const { uploadFile, getFileStream } = require('../../utils/s3');
 const fs = require('fs');
 const util = require('util');
 const unlinkFile = util.promisify(fs.unlink);
+
 const createTicket = async (req, res, next) => {
   try {
     const { projectId, title, description, priorityLevel, ticketType } =
@@ -33,7 +34,6 @@ const createTicket = async (req, res, next) => {
     next(e);
   }
 };
-
 const getAllTickets = async (req, res, next) => {
   try {
     let payload = await Ticket.find();
@@ -95,13 +95,28 @@ const updateTicket = async (req, res, next) => {
     next(e);
   }
 };
+// const addCommentToTicket = async (req, res, next) => {
+//   const comment = req.body;
+//   const ticket_id = req.params.id;
+ 
 
+//   try {
+//     const foundTargetTicket = await Ticket.findOne({
+//       _id: ticket_id,
+//     });
 
+//     foundTargetTicket.comments.push(comment);
 
+//     await foundTargetTicket.save();
 
-
-
-
+//     res.json({
+//       message: 'success',
+//       payload: updatedTicket,
+//     });
+//   } catch (e) {
+//     next(e);
+//   }
+// };
 const getAllAttachmentsByTicket = async (req, res, next) => {
   const ticket_id = req.params.id;
   try {
@@ -130,17 +145,6 @@ const getAllAttachmentsByTicket = async (req, res, next) => {
 
   } catch (error) {}
 };
-
-
-
-
-
-
-
-
-
-
-
 const uploadFileToTicket = async (req, res, next) => {
   const ticket_id = req.params.id;
   if (req.files === null) {
@@ -172,16 +176,6 @@ const uploadFileToTicket = async (req, res, next) => {
     next(e);
   }
 };
-
-
-
-
-
-
-
-
-
-
 const getSingleAttachmentFromS3bucket = async (req, res, next) => {
   try {
     const key = req.params.key;
@@ -198,22 +192,6 @@ const getSingleAttachmentFromS3bucket = async (req, res, next) => {
     next(e);
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const deleteTicket = async (req, res, next) => {
   try {
     let deletedTicket = await Ticket.findByIdAndRemove(req.params.id);

@@ -89,6 +89,7 @@ async function login(req, res) {
             firstName: foundUser.firstName,
             lastName: foundUser.lastName,
             role: foundUser.role,
+            email: foundUser.email
           },
           process.env.PRIVATE_JWT_KEY,
           {

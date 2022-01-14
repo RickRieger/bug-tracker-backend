@@ -1,19 +1,30 @@
 const Comment = require('../model/TicketComments');
 const Ticket = require('../../ticket/model/Ticket');
 const TicketComments = require('../model/TicketComments');
-
+const User = require('../../user/model/User');
 const createComment = async (req, res, next) => {
   const ticket_id = req.params.id;
+  const comment = req.body.comment;
+
   try {
-    const { ticket, comment, whoMadeComment } = req.body;
-    const newComment = new Comment({ ticket, comment, whoMadeComment });
-    const savedNewComment = await newComment.save();
-    const foundTargetTicket = await Ticket.findOne({
-      _id: ticket,
+    const commenter = {
+      firstName: res.locals.decodedJwt.firstName,
+      lastName: res.locals.decodedJwt.lastName,
+    };
+    const ticket = await Ticket.findOne({
+      _id: ticket_id,
     });
-    foundTargetTicket.comments.push(savedNewComment._id);
-    await foundTargetTicket.save();
-    res.json(savedNewComment);
+    const newComment = new Comment({ ticket, commenter, comment });
+
+    const savedNewComment = await newComment.save();
+
+    ticket.comments.push(savedNewComment._id);
+
+    await ticket.save();
+
+    res.json({
+      message: 'comment saved',
+    });
   } catch (e) {
     next(e);
   }
@@ -29,8 +40,9 @@ const getAllTicketComments = async (req, res, next) => {
         select: '-__v',
       })
       .select(
-        '-project -description -priorityLevel -ticketType -developers -createdAt -updatedAt -__v -_id -title'
+        '-projectId -description -priorityLevel -ticketType -ticketStatus -attachments -developer -createdAt -updatedAt -__v -_id -title '
       );
+    console.log(payload);
     res.json(payload);
   } catch (e) {
     next(e);

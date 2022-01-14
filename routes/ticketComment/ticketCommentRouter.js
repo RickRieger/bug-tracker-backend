@@ -9,7 +9,7 @@ const {
   deleteComment,
 } = require('./controller/ticketCommentController');
 
-router.post('/create-comment', jwtMiddleware, createComment);
+router.post('/create-comment-by-ticket/:id', jwtMiddleware, createComment);
 router.get(
   '/get-all-comments-by-ticket/:id',
   jwtMiddleware,

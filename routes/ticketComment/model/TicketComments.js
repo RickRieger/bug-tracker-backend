@@ -6,8 +6,7 @@ const ticketCommentsSchema = new mongoose.Schema(
     comment: {
       type: String,
     },
-    whoMadeComment: '',
-    type: String,
+    commenter:{ type: Object},
   },
   { timestamps: true }
 );

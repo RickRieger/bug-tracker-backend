@@ -7,11 +7,11 @@ async function checkJwtToken(req, res, next) {
       res.locals.decodedJwt = decodedJwt;
       next();
     } else {
-      throw { message: "You Don't have permission! ", statusCode: 500 };
+      throw { message: "You don't have permission! ", statusCode: 500 };
     }
   } catch (e) {
-
-    res.status(e.statusCode).json({ message: e.message, error: e });
+    console.log(e);
+    res.status(401).json({ message: e.message, error: e });
   }
 }
 module.exports = checkJwtToken;
