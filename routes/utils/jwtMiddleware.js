@@ -11,7 +11,6 @@ async function checkJwtToken(req, res, next) {
     }
   } catch (e) {
     console.log(e);
-    res.status(401).json({ message: e.message, error: e });
   }
 }
 module.exports = checkJwtToken;
