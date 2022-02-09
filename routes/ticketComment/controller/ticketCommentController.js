@@ -6,6 +6,7 @@ const createComment = async (req, res, next) => {
   const ticket_id = req.params.id;
   const comment = req.body.comment;
 
+
   try {
     const commenter = {
       firstName: res.locals.decodedJwt.firstName,

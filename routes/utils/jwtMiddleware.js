@@ -10,7 +10,7 @@ async function checkJwtToken(req, res, next) {
       throw { message: "You don't have permission! ", statusCode: 500 };
     }
   } catch (e) {
-    console.log(e);
+    res.json(e);
   }
 }
 module.exports = checkJwtToken;
