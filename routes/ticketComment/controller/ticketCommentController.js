@@ -6,7 +6,6 @@ const createComment = async (req, res, next) => {
   const ticket_id = req.params.id;
   const comment = req.body.comment;
 
-
   try {
     const commenter = {
       firstName: res.locals.decodedJwt.firstName,
@@ -43,7 +42,7 @@ const getAllTicketComments = async (req, res, next) => {
       .select(
         '-projectId -description -priorityLevel -ticketType -ticketStatus -attachments -developer -createdAt -updatedAt -__v -_id -title '
       );
-    console.log(payload);
+
     res.json(payload);
   } catch (e) {
     next(e);
