@@ -10,7 +10,6 @@ const projectRouter = require('./routes/project/projectRouter');
 const ticketRouter = require('./routes/ticket/ticketRouter');
 const ticketCommentRouter = require('./routes/ticketComment/ticketCommentRouter');
 
-
 app.use(cors());
 
 if (process.env.NODE_ENV === 'development') {
